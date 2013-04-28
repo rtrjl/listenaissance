@@ -1,0 +1,71 @@
+{% extends "include/main.html" %}
+{% load filtres %}
+
+{% block contenu %}
+<div class="container" style="margin-top:60px;">
+	<div class="row-fluid">
+
+		{% for item in articles%}
+		<div class="row">
+			<div class="span10 well">
+				<div class="span4">
+					{%if item.photo%}
+					<img class="img-polaroid" src="{{item.photo|resize:'300x300x1'}}" />
+					{% endif %}
+				</div>
+				<div class="span6">
+					<h2>{{item.nom}}</h2>
+					<p>
+						{{item.descriptif}}
+					</p>
+
+					<p>
+						Quantité : {{item.quantite}}
+						<br/>
+						{% if item.quantite > 1%}
+						{% if item.prix %} Prix total = {{item.prix_total|monnaie}} (prix unitaire : {{item.prix|monnaie}})
+						<br/>
+						{% endif %}
+
+						{% else %}
+						{% if item.prix %} Prix total : {{item.prix|monnaie}}
+						<br/>
+						{% endif %}
+
+						{%endif%}
+						Nombre de participations : {{item.nb_participations}}
+						<br/>
+
+						{% if item.montant_restant > 0 %} Montant restant : {{item.montant_restant|monnaie}}{% endif %}
+						<br/>
+					</p>
+					<p>
+
+						{% if item.boutique.all|length > 0 %}
+						<strong>Boutique{{item.boutique.all|length|pluralize}}</strong>
+						<ul>
+							{% for lieu in item.boutique.all %}
+							<li>
+								{{lieu.nom}}{% if lieu.url %}, <a href="{{lieu.url}}">site internet</a> {% endif %}
+								<br/>
+								{{lieu.rue}}<br>
+								{{lieu.code_postal}}<br/>
+								{{lieu.ville}}<br/>
+								{{lieu.telephone}}
+							</li>
+							{% endfor %}
+						</ul>
+						{% endif %}
+					</p>
+				</div>
+				<br/>
+			</div>
+
+		</div>
+		{% endfor %}
+
+	</div>
+</div>
+
+{% endblock %}
+

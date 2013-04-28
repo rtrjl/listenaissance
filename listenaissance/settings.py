@@ -61,7 +61,7 @@ MEDIA_DIR_NAME = '/media/'
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://example.com/media/", "http://media.example.com/"
-MEDIA_URL = 'http://127.0.0.1:8080/media/'
+MEDIA_URL = 'http://127.0.0.1:8081/media/'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -71,7 +71,7 @@ STATIC_ROOT = SUPPROJECT_PATH+'/static/'
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
-STATIC_URL = 'http://127.0.0.1:8080/static/'
+STATIC_URL = 'http://127.0.0.1:8081/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -85,7 +85,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -122,14 +122,18 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+                  
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'listeweb',
+    'south',
     # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
+    'django.contrib.admin',
+    
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
