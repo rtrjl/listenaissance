@@ -82,7 +82,7 @@
 						<ul>
 							{% for link in item.liens %}
 							<li>
-								<a href="{{link.url}}">Voir sur le site : {{link.url|hostname}}</a>
+								<a href="{{link.url}}">{{link.url|hostname}}(Voir le site)</a>
 							</li>
 							{% endfor %}
 
@@ -184,7 +184,7 @@
 						<ul>
 							{% for link in item.liens %}
 							<li>
-								<a href="{{link.url}}">Voir sur le site : {{link.url|hostname}}</a>
+								<a href="{{link.url}}">{{link.url|hostname}} (Voir le site)</a>
 							</li>
 							{% endfor %}
 
@@ -202,7 +202,7 @@
 					</div>
 					<div class="modal-body">
 						<p>
-							One fine body…
+							{{textes.participation|safe}}
 						</p>
 					</div>
 					<div class="modal-footer">
