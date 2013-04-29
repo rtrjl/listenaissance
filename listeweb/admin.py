@@ -3,9 +3,16 @@
 from django.contrib import admin
 from django.template import defaultfilters
 from listeweb.models import ArticleGenerique,Article,ArticleLien,Boutique,Participation,ParticipationFinanciere,\
-    ArticleBase
+    ArticleBase,TexteIntroduction
 from tinymce.widgets import TinyMCE
 from django.db import models
+
+
+class TexteIntroductionAdmin(admin.ModelAdmin):
+
+    formfield_overrides = {
+          models.TextField : {'widget': TinyMCE(attrs={'cols': 80, 'rows': 30})},
+    }
 
 class ArticleLienInline(admin.TabularInline):
     model = ArticleLien
@@ -56,3 +63,4 @@ class BoutiqueAdmin(admin.ModelAdmin):
 admin.site.register(ArticleGenerique, ArticleGeneriqueAdmin)
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(Boutique, BoutiqueAdmin)
+admin.site.register(TexteIntroduction, TexteIntroductionAdmin)

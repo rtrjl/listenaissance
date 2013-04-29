@@ -4,7 +4,11 @@
 {% block contenu %}
 <div class="container" style="margin-top:60px;">
 	<div class="row-fluid">
-
+		<div class="row">
+			<div class="offset2 span6">
+				{{textes.texte|safe}}
+			</div>
+		</div>
 		{% for item in articles%}
 		<div class="row">
 			<div class="span10 well">
@@ -15,9 +19,9 @@
 				</div>
 				<div class="span6">
 					<h2>{{item.nom}}</h2>
-					<p  class="lead" >
-						{{item.descriptif}}
-					</p>
+					
+						{{item.descriptif|safe}}
+					
 
 					<p class="text-right">
 						Quantité : {{item.quantite}}
@@ -33,7 +37,7 @@
 						{% endif %}
 
 						{%endif%}
-						Nombre de participations : {{item.nb_participations}}
+						Somme déjà versée : {{item.montant_verse|monnaie}}
 						<br/>
 
 						{% if item.montant_restant > 0 %} Montant restant : {{item.montant_restant|monnaie}} <br/>
@@ -95,9 +99,8 @@
 						<h3 id="myModalLabel">Participer au cadeau : {{item.nom}}</h3>
 					</div>
 					<div class="modal-body">
-						<p>
-							One fine body…
-						</p>
+						{{textes.participation|safe}}
+						
 					</div>
 					<div class="modal-footer">
 						<button class="btn" data-dismiss="modal" aria-hidden="true">
@@ -120,10 +123,9 @@
 				</div>
 				<div class="span6">
 					<h2>{{item.nom}}</h2>
-					<p  class="lead" >
-						{{item.descriptif}}
-					</p>
-
+			
+						{{item.descriptif|safe}}
+					
 					<p class="text-right">
 						Quantité : {{item.quantite}}
 						<br/>
@@ -138,10 +140,10 @@
 						{% endif %}
 
 						{%endif%}
-						Nombre de participations : {{item.nb_participations}}
+						Quantité déjà achetée : {{item.nb_participations}}
 						<br/>
 
-						{% if item.reste > 0 %} Reste : {{item.reste}} <br/><br/>
+						{% if item.reste > 0 %} Reste à acheter: {{item.reste}} <br/><br/>
 						<a href="#myModal-{{item.id}}" role="button" class="btn btn-primary" data-toggle="modal">Participer</a>
 						{% else %} <span class="label label-success">Déjà Offert</span> {% endif %}
 						<br/>
@@ -178,7 +180,7 @@
 					</p>
 					<p>
 						{% if item.liens|length > 0 %}
-						Liens :
+						Suggestion{{item.liens|length|pluralize}} de boutique{{item.liens|length|pluralize}} :
 						<ul>
 							{% for link in item.liens %}
 							<li>

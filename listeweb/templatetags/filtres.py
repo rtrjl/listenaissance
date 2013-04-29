@@ -15,13 +15,10 @@ def hostname(url):
 
 @register.filter(is_safe=True)
 def monnaie(nombre):
-    if nombre == 0.0:
-        return "Gratuit"
-    else:
-        nombre = "{0:10.2f}".format(nombre)
-        nombre = str(nombre)+"€"
-        nombre = nombre.replace(".", ",") 
-        return nombre
+    nombre = "{0:10.2f}".format(nombre)
+    nombre = str(nombre)+"€"
+    nombre = nombre.replace(".", ",") 
+    return nombre
 
 @register.filter(is_safe=True)   
 def resize(myfile, size='100x100x1'):

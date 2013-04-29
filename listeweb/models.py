@@ -6,7 +6,10 @@ from django.db import models
 
 class TexteIntroduction(models.Model):
     texte = models.TextField("Texte d'Intro")
-
+    participation = models.TextField("Texte de participation")
+    
+    def __unicode__(self):
+        return u"Texte d'intro"
 
 class Boutique(models.Model):
     nom = models.CharField(max_length=255)
@@ -66,6 +69,12 @@ class Article(ArticleBase):
     
     def prix_total(self):
         return self.prix*self.quantite
+    
+    def montant_verse(self):
+        montant = 0
+        for item in self.participations():
+            montant = montant + item.montant
+        return montant
     
     def montant_restant(self):
         montant_participation = 0
