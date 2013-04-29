@@ -4,8 +4,14 @@ import os
 from django import template
 from django.conf import settings
 from PIL import Image, ImageOps , ImageFilter ,ImageChops
+from urlparse import urlparse
 
 register = template.Library()
+
+@register.filter(is_safe=True)
+def hostname(url):
+    return urlparse(url)[1]
+
 
 @register.filter(is_safe=True)
 def monnaie(nombre):

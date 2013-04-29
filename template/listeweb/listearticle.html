@@ -15,11 +15,11 @@
 				</div>
 				<div class="span6">
 					<h2>{{item.nom}}</h2>
-					<p>
+					<p  class="lead" >
 						{{item.descriptif}}
 					</p>
 
-					<p>
+					<p class="text-right">
 						Quantité : {{item.quantite}}
 						<br/>
 						{% if item.quantite > 1%}
@@ -36,7 +36,10 @@
 						Nombre de participations : {{item.nb_participations}}
 						<br/>
 
-						{% if item.montant_restant > 0 %} Montant restant : {{item.montant_restant|monnaie}}{% endif %}
+						{% if item.montant_restant > 0 %} Montant restant : {{item.montant_restant|monnaie}} <br/>
+						<br/>
+						<a href="#myModal-{{item.id}}" role="button" class="btn btn-primary" data-toggle="modal">Participer</a>
+						{% else %} <span class="label label-success">Déjà Offert</span> {% endif %}
 						<br/>
 					</p>
 					<p>
@@ -46,24 +49,171 @@
 						<ul>
 							{% for lieu in item.boutique.all %}
 							<li>
-								{{lieu.nom}}{% if lieu.url %}, <a href="{{lieu.url}}">site internet</a> {% endif %}
+								{{lieu.nom}}{% if lieu.url %}  (<a href="{{lieu.url}}">site internet</a>) {% endif %}
 								<br/>
-								{{lieu.rue}}<br>
-								{{lieu.code_postal}}<br/>
-								{{lieu.ville}}<br/>
-								{{lieu.telephone}}
+								{% if lieu.rue %}{{lieu.rue}}
+								<br>
+								{% endif %}
+								{% if lieu.code_postal%}{{lieu.code_postal}}
+								<br/>
+								{% endif %}
+								{% if lieu.ville %}{{lieu.ville}}
+								<br/>
+								{% endif %}
+								{% if lieu.telephone %}{{lieu.telephone}}
+								<br/>
+								{%endif%}
+								{% if lieu.url %}Site web : <a href="{{lieu.url}}">{{lieu.url|hostname}}</a>
+								<br/>
+								{% endif %}
+
 							</li>
 							{% endfor %}
 						</ul>
 						{% endif %}
 					</p>
+					<p>
+						{% if item.liens|length > 0 %}
+						Liens :
+						<ul>
+							{% for link in item.liens %}
+							<li>
+								<a href="{{link.url}}">Voir sur le site : {{link.url|hostname}}</a>
+							</li>
+							{% endfor %}
+
+						</ul>
+						{%endif%}
+					</p>
 				</div>
 				<br/>
+				<div id="myModal-{{item.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							×
+						</button>
+						<h3 id="myModalLabel">Participer au cadeau : {{item.nom}}</h3>
+					</div>
+					<div class="modal-body">
+						<p>
+							One fine body…
+						</p>
+					</div>
+					<div class="modal-footer">
+						<button class="btn" data-dismiss="modal" aria-hidden="true">
+							Fermer
+						</button>
+						
+					</div>
+				</div>
 			</div>
 
 		</div>
 		{% endfor %}
+		{% for item in articlesgeneriques %}
+		<div class="row">
+			<div class="span10 well">
+				<div class="span4">
+					{%if item.photo%}
+					<img class="img-polaroid" src="{{item.photo|resize:'300x300x1'}}" />
+					{% endif %}
+				</div>
+				<div class="span6">
+					<h2>{{item.nom}}</h2>
+					<p  class="lead" >
+						{{item.descriptif}}
+					</p>
 
+					<p class="text-right">
+						Quantité : {{item.quantite}}
+						<br/>
+						{% if item.quantite > 1%}
+						{% if item.prix %} Prix total = {{item.prix_total|monnaie}} (prix unitaire : {{item.prix|monnaie}})
+						<br/>
+						{% endif %}
+
+						{% else %}
+						{% if item.prix %} Prix total : {{item.prix|monnaie}}
+						<br/>
+						{% endif %}
+
+						{%endif%}
+						Nombre de participations : {{item.nb_participations}}
+						<br/>
+
+						{% if item.reste > 0 %} Reste : {{item.reste}} <br/><br/>
+						<a href="#myModal-{{item.id}}" role="button" class="btn btn-primary" data-toggle="modal">Participer</a>
+						{% else %} <span class="label label-success">Déjà Offert</span> {% endif %}
+						<br/>
+					</p>
+					<p>
+
+						{% if item.boutique.all|length > 0 %}
+						<strong>Boutique{{item.boutique.all|length|pluralize}}</strong>
+						<ul>
+							{% for lieu in item.boutique.all %}
+							<li>
+								{{lieu.nom}}{% if lieu.url %}  (<a href="{{lieu.url}}">site internet</a>) {% endif %}
+								<br/>
+								{% if lieu.rue %}{{lieu.rue}}
+								<br>
+								{% endif %}
+								{% if lieu.code_postal%}{{lieu.code_postal}}
+								<br/>
+								{% endif %}
+								{% if lieu.ville %}{{lieu.ville}}
+								<br/>
+								{% endif %}
+								{% if lieu.telephone %}{{lieu.telephone}}
+								<br/>
+								{%endif%}
+								{% if lieu.url %}Site web : <a href="{{lieu.url}}">{{lieu.url|hostname}}</a>
+								<br/>
+								{% endif %}
+
+							</li>
+							{% endfor %}
+						</ul>
+						{% endif %}
+					</p>
+					<p>
+						{% if item.liens|length > 0 %}
+						Liens :
+						<ul>
+							{% for link in item.liens %}
+							<li>
+								<a href="{{link.url}}">Voir sur le site : {{link.url|hostname}}</a>
+							</li>
+							{% endfor %}
+
+						</ul>
+						{%endif%}
+					</p>
+				</div>
+				<br/>
+				<div id="myModal-{{item.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							×
+						</button>
+						<h3 id="myModalLabel">Participer au cadeau : {{item.nom}}</h3>
+					</div>
+					<div class="modal-body">
+						<p>
+							One fine body…
+						</p>
+					</div>
+					<div class="modal-footer">
+						<button class="btn" data-dismiss="modal" aria-hidden="true">
+							Fermer
+						</button>
+						
+					</div>
+				</div>
+			</div>
+
+		</div>
+		{% endfor %}
 	</div>
 </div>
 

@@ -4,6 +4,10 @@ from django.db import models
 
 # Create your models here
 
+class TexteIntroduction(models.Model):
+    texte = models.TextField("Texte d'Intro")
+
+
 class Boutique(models.Model):
     nom = models.CharField(max_length=255)
     rue = models.CharField(max_length=255, blank = True, null= True)
@@ -27,6 +31,8 @@ class ArticleBase(models.Model):
     def __unicode__(self):
         return self.nom
     
+    def liens(self):
+        return ArticleLien.objects.filter(reference = self.id)
     
 class ArticleLien(models.Model):
     url = models.URLField(verbose_name="Lien vers article sur un site web")
@@ -34,6 +40,22 @@ class ArticleLien(models.Model):
 
 class ArticleGenerique(ArticleBase):
     quantite = models.IntegerField(verbose_name="Quantité")
+    
+    def participations(self):
+        return  Participation.objects.filter(reference = self.id)
+    
+    def reste(self):
+        reste = 0
+        for item in self.participations():
+            reste = reste + item.montant
+        
+        return self.quantite - reste
+   
+    
+    def nb_participations(self):
+        return len(self.participations())
+    
+    
 
 class Article(ArticleBase):
     prix = models.FloatField(verbose_name="Prix")
@@ -63,6 +85,6 @@ class ParticipationFinanciere(models.Model):
     reference = models.ForeignKey(Article)
     
 class Participation(models.Model):
-    quantite = models.IntegerField(verbose_name="Montant de la participation")
+    quantite = models.IntegerField(verbose_name="Quantité")
     nom_du_participant = models.CharField(max_length=255)
     reference = models.ForeignKey(ArticleGenerique)

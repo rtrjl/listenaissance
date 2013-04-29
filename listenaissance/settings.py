@@ -130,6 +130,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'listeweb',
+    'tinymce',
     'south',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
@@ -166,3 +167,11 @@ LOGGING = {
         },
     }
 }
+
+TINYMCE_DEFAULT_CONFIG = {
+    'plugins': "table,spellchecker,paste,searchreplace",
+    'theme': "advanced",
+    'cleanup_on_startup': True,
+    'custom_undo_redo_levels': 10,
+}
+

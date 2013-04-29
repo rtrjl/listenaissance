@@ -2,8 +2,10 @@
 
 from django.contrib import admin
 from django.template import defaultfilters
-from listeweb.models import ArticleGenerique,Article,ArticleLien,Boutique,Participation,ParticipationFinanciere
-
+from listeweb.models import ArticleGenerique,Article,ArticleLien,Boutique,Participation,ParticipationFinanciere,\
+    ArticleBase
+from tinymce.widgets import TinyMCE
+from django.db import models
 
 class ArticleLienInline(admin.TabularInline):
     model = ArticleLien
@@ -25,8 +27,10 @@ class ArticleGeneriqueAdmin(admin.ModelAdmin):
     inlines = [
         ParticipationInline,ArticleLienInline,
     ]
-    
-    
+    formfield_overrides = {
+          models.TextField : {'widget': TinyMCE(attrs={'cols': 80, 'rows': 30})},
+    }
+
 class ArticleAdmin(admin.ModelAdmin):
     list_display = [ 'nom', 'prix', 'publie']
     search_fields = ['nom']
@@ -39,7 +43,9 @@ class ArticleAdmin(admin.ModelAdmin):
         ParticipationFinanciereInline,ArticleLienInline,
     ]
     
-    
+    formfield_overrides = {
+          models.TextField : {'widget': TinyMCE(attrs={'cols': 80, 'rows': 30})},
+    }
 
     
 class BoutiqueAdmin(admin.ModelAdmin):
