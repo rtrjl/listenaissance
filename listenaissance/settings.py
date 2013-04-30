@@ -130,6 +130,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'listeweb',
+    'gunicorn',
     'tinymce',
     'south',
     # Uncomment the next line to enable the admin:
