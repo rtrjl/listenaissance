@@ -18,7 +18,7 @@
 					{% endif %}
 				</div>
 				<div class="span6">
-					<h2>{{item.nom}}</h2>
+					<h2 id="{{item.id}}">{{item.nom}}</h2>
 					
 						{{item.descriptif|safe}}
 					
@@ -58,11 +58,7 @@
 								{% if lieu.rue %}{{lieu.rue}}
 								<br>
 								{% endif %}
-								{% if lieu.code_postal%}{{lieu.code_postal}}
-								<br/>
-								{% endif %}
-								{% if lieu.ville %}{{lieu.ville}}
-								<br/>
+								{% if lieu.code_postal%}{{lieu.code_postal}} {% endif %}{% if lieu.ville %}{{lieu.ville}}<br/>
 								{% endif %}
 								{% if lieu.telephone %}{{lieu.telephone}}
 								<br/>
